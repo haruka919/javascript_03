@@ -14,7 +14,7 @@
 
   // タスクを追加
   function addTask() {
-    const value = inputTask.value;
+    const value = inputTask.value.trim();
     inputTask.value = '';
     if (value) {
       taskList.push({
