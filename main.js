@@ -3,11 +3,6 @@
   const inputTask = document.getElementById('input-task');
   const taskList = document.getElementById('task-list');
   const tasks = [];
-  const newTask = {
-    id: 1,
-    comment: null,
-    completed: false
-  }
 
   addButton.addEventListener('click', () => {
     addTask();
@@ -15,12 +10,12 @@
 
   // タスクを追加
   function addTask() {
-    newTask.comment = inputTask.value.trim();
+    const comment = inputTask.value.trim();
     inputTask.value = '';
-    if (newTask.comment) {
+    if (comment) {
       tasks.push({
-        id: newTask.id++,
-        comment: newTask.comment,
+        id: tasks.length,
+        comment: comment,
         completed: false
       });
       showTask();
