@@ -8,13 +8,15 @@
     addTask();
   })
 
-  // タスクを追加
+
+  /**
+   * タスクを追加
+   */
   function addTask() {
     const comment = inputTask.value.trim();
     inputTask.value = '';
     if (comment) {
       tasks.push({
-        id: tasks.length,
         comment: comment,
         completed: false
       });
@@ -22,15 +24,18 @@
     }
   }
 
-  // タスクを表示
-  function showTask() {
 
+  /**
+   * タスクを表示
+   */
+  function showTask() {
     // tbodyの中身を空にする
     while (taskList.firstChild) {
       taskList.removeChild(taskList.firstChild);
     }
 
-    tasks.forEach( task => {
+    tasks.forEach( (task, index) => {
+      task.id = index;
       const tr = document.createElement('tr');
 
       const idTd = document.createElement('td');
@@ -52,8 +57,20 @@
       deleteButton.textContent = '削除';
       deleteButtonTd.appendChild(deleteButton);
       tr.appendChild(deleteButtonTd);
+      deleteButton.addEventListener('click', () => {
+        removeTask(index);
+      })
 
       taskList.appendChild(tr);
     });
+  }
+
+
+  /**
+   * タスクを削除
+   */
+  function removeTask(index) {
+    tasks.splice(index, 1);
+    showTask();
   }
 }
