@@ -11,7 +11,7 @@
   /**
    * タスクを追加
    */
-  function addTask() {
+  const addTask = () => {
     const comment = inputTask.value.trim();
     inputTask.value = '';
     if (comment) {
@@ -26,7 +26,7 @@
   /**
    * タスクを表示
    */
-  function showTask() {
+  const showTask = () => {
     // tbodyの中身を空にする
     while (taskList.firstChild) {
       taskList.removeChild(taskList.firstChild);
@@ -66,7 +66,7 @@
   /**
    * タスクを削除
    */
-  function removeTask(index) {
+  const removeTask = (index) => {
     tasks.splice(index, 1);
     showTask();
   }
