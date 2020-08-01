@@ -32,7 +32,7 @@
       taskList.removeChild(taskList.firstChild);
     }
 
-    tasks.forEach( (task, index) => {
+    tasks.forEach((task, index) => {
       task.id = index;
       const tr = document.createElement('tr');
 
