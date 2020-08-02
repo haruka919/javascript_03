@@ -3,39 +3,37 @@
   const inputTask = document.getElementById('input-task');
   const taskList = document.getElementById('task-list');
   const tasks = [];
-  const newTask = {
-    id: 1,
-    comment: null,
-    completed: false
-  }
 
   addButton.addEventListener('click', () => {
     addTask();
   })
 
-  // タスクを追加
-  function addTask() {
-    newTask.comment = inputTask.value.trim();
+  /**
+   * タスクを追加
+   */
+  const addTask = () => {
+    const comment = inputTask.value.trim();
     inputTask.value = '';
-    if (newTask.comment) {
+    if (comment) {
       tasks.push({
-        id: newTask.id++,
-        comment: newTask.comment,
+        comment: comment,
         completed: false
       });
       showTask();
     }
   }
 
-  // タスクを表示
-  function showTask() {
-
+  /**
+   * タスクを表示
+   */
+  const showTask = () => {
     // tbodyの中身を空にする
     while (taskList.firstChild) {
       taskList.removeChild(taskList.firstChild);
     }
 
-    tasks.forEach( task => {
+    tasks.forEach((task, index) => {
+      task.id = index;
       const tr = document.createElement('tr');
 
       const idTd = document.createElement('td');
@@ -57,8 +55,19 @@
       deleteButton.textContent = '削除';
       deleteButtonTd.appendChild(deleteButton);
       tr.appendChild(deleteButtonTd);
+      deleteButton.addEventListener('click', () => {
+        removeTask(index);
+      })
 
       taskList.appendChild(tr);
     });
+  }
+
+  /**
+   * タスクを削除
+   */
+  const removeTask = (index) => {
+    tasks.splice(index, 1);
+    showTask();
   }
 }
