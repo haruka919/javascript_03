@@ -109,6 +109,7 @@
    */
   const removeTask = (id) => {
     tasks.splice(--id, 1);
+    // IDを振り直す
     tasks.forEach((task, index) => {
       task.id = ++index;
     });
