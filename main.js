@@ -2,10 +2,21 @@
   const addButton = document.getElementById('add-button');
   const inputTask = document.getElementById('input-task');
   const taskList = document.getElementById('task-list');
+  const statusGroup = document.getElementsByName("statusGroup");
   const tasks = [];
+  let filterStatus = 'all';
 
   addButton.addEventListener('click', () => {
     addTask();
+  })
+
+  /**
+   * 表示するステータスを変更
+   */
+  statusGroup.forEach((radio) => {
+    radio.addEventListener('click', () => {
+      filterStatus = radio.value;
+    })
   })
 
   /**
@@ -31,6 +42,13 @@
     while (taskList.firstChild) {
       taskList.removeChild(taskList.firstChild);
     }
+
+    // 表示するステータスをチェック
+    statusGroup.forEach((status) => {
+      if (status.checked) {
+        filterStatus = status.value;
+      }
+    });
 
     tasks.forEach((task, index) => {
       task.id = index;
