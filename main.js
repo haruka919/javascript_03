@@ -46,9 +46,15 @@
 
       const statusButtonTd = document.createElement('td');
       const statusButton = document.createElement('button');
-      statusButton.textContent = '作業中';
+      statusButton.textContent = task.completed ? "完了" : "作業中";
       statusButtonTd.appendChild(statusButton);
       tr.appendChild(statusButtonTd);
+
+      // ステータスを切り替え
+      statusButton.addEventListener('click', () => {
+        task.completed = !task.completed;
+        statusButton.textContent = task.completed ? '完了' : '作業中';
+      });
 
       const deleteButtonTd = document.createElement('td');
       const deleteButton = document.createElement('button');
