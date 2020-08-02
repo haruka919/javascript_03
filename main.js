@@ -88,6 +88,7 @@
       statusButton.addEventListener('click', () => {
         task.completed = !task.completed;
         statusButton.textContent = task.completed ? '完了' : '作業中';
+        showTask();
       });
 
       const deleteButtonTd = document.createElement('td');
