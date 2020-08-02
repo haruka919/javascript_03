@@ -6,6 +6,19 @@
   const tasks = [];
   let filterStatus = 'all';
 
+  // 表示ステータスに応じて、tasksをフィルターにかけ配列で返す
+  const filteredTasks = {
+    all(tasks) {
+      return tasks;
+    },
+    working(tasks) {
+      return tasks.filter((task) => !task.completed);
+    },
+    completed(tasks) {
+      return tasks.filter((task) => task.completed);
+    },
+  };
+
   addButton.addEventListener('click', () => {
     addTask();
   })
@@ -16,6 +29,7 @@
   statusGroup.forEach((radio) => {
     radio.addEventListener('click', () => {
       filterStatus = radio.value;
+      showTask();
     })
   })
 
@@ -50,7 +64,9 @@
       }
     });
 
-    tasks.forEach((task, index) => {
+    let showTasks = filteredTasks[filterStatus](tasks);
+
+    showTasks.forEach((task, index) => {
       task.id = index;
       const tr = document.createElement('tr');
 
@@ -81,7 +97,7 @@
       tr.appendChild(deleteButtonTd);
       deleteButton.addEventListener('click', () => {
         removeTask(index);
-      })
+      });
 
       taskList.appendChild(tr);
     });
