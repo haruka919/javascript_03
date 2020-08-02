@@ -46,7 +46,7 @@
 
       const statusButtonTd = document.createElement('td');
       const statusButton = document.createElement('button');
-      statusButton.textContent = task.completed ? "完了" : "作業中";
+      statusButton.textContent = task.completed ? '完了' : '作業中';
       statusButtonTd.appendChild(statusButton);
       tr.appendChild(statusButtonTd);
 
