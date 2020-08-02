@@ -41,8 +41,9 @@
     inputTask.value = '';
     if (comment) {
       tasks.push({
+        id: tasks.length + 1,
         comment: comment,
-        completed: false
+        completed: false,
       });
       showTask();
     }
@@ -66,8 +67,7 @@
 
     let showTasks = filteredTasks[filterStatus](tasks);
 
-    showTasks.forEach((task, index) => {
-      task.id = index;
+    showTasks.forEach((task) => {
       const tr = document.createElement('tr');
 
       const idTd = document.createElement('td');
@@ -96,7 +96,7 @@
       deleteButtonTd.appendChild(deleteButton);
       tr.appendChild(deleteButtonTd);
       deleteButton.addEventListener('click', () => {
-        removeTask(index);
+        removeTask(task.id);
       });
 
       taskList.appendChild(tr);
@@ -106,8 +106,11 @@
   /**
    * タスクを削除
    */
-  const removeTask = (index) => {
-    tasks.splice(index, 1);
+  const removeTask = (id) => {
+    tasks.splice(--id, 1);
+    tasks.forEach((task, index) => {
+      task.id = ++index;
+    });
     showTask();
   }
 }
