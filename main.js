@@ -27,7 +27,7 @@
    * 表示するステータスを変更
    */
   statusGroup.forEach((radio) => {
-    radio.addEventListener('click', () => {
+    radio.addEventListener('change', () => {
       filterStatus = radio.value;
       showTask();
     })
