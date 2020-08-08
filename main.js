@@ -2,10 +2,35 @@
   const addButton = document.getElementById('add-button');
   const inputTask = document.getElementById('input-task');
   const taskList = document.getElementById('task-list');
+  const statusGroup = document.getElementsByName("statusGroup");
   const tasks = [];
+  let filterStatus = 'all';
+
+  // 表示ステータスに応じて、tasksをフィルターにかけ配列で返す
+  const filteredTasks = {
+    all(tasks) {
+      return tasks;
+    },
+    working(tasks) {
+      return tasks.filter((task) => !task.completed);
+    },
+    completed(tasks) {
+      return tasks.filter((task) => task.completed);
+    },
+  };
 
   addButton.addEventListener('click', () => {
     addTask();
+  })
+
+  /**
+   * 表示するステータスを変更
+   */
+  statusGroup.forEach((radio) => {
+    radio.addEventListener('change', () => {
+      filterStatus = radio.value;
+      showTask();
+    })
   })
 
   /**
@@ -16,8 +41,9 @@
     inputTask.value = '';
     if (comment) {
       tasks.push({
+        id: tasks.length + 1,
         comment: comment,
-        completed: false
+        completed: false,
       });
       showTask();
     }
@@ -32,8 +58,16 @@
       taskList.removeChild(taskList.firstChild);
     }
 
-    tasks.forEach((task, index) => {
-      task.id = index;
+    // 表示するステータスをチェック
+    statusGroup.forEach((status) => {
+      if (status.checked) {
+        filterStatus = status.value;
+      }
+    });
+
+    let showTasks = filteredTasks[filterStatus](tasks);
+
+    showTasks.forEach((task) => {
       const tr = document.createElement('tr');
 
       const idTd = document.createElement('td');
@@ -54,6 +88,7 @@
       statusButton.addEventListener('click', () => {
         task.completed = !task.completed;
         statusButton.textContent = task.completed ? '完了' : '作業中';
+        showTask();
       });
 
       const deleteButtonTd = document.createElement('td');
@@ -62,8 +97,8 @@
       deleteButtonTd.appendChild(deleteButton);
       tr.appendChild(deleteButtonTd);
       deleteButton.addEventListener('click', () => {
-        removeTask(index);
-      })
+        removeTask(task.id);
+      });
 
       taskList.appendChild(tr);
     });
@@ -72,8 +107,12 @@
   /**
    * タスクを削除
    */
-  const removeTask = (index) => {
-    tasks.splice(index, 1);
+  const removeTask = (id) => {
+    tasks.splice(--id, 1);
+    // IDを振り直す
+    tasks.forEach((task, index) => {
+      task.id = ++index;
+    });
     showTask();
   }
 }
